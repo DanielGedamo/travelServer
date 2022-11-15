@@ -1,4 +1,4 @@
-const States = [
+const states = [
     {
         id:1,
         countryName:"Israel",
@@ -91,4 +91,4 @@ const States = [
     }
 ]
 
-module.exports = States
+module.exports = states
