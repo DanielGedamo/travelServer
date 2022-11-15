@@ -19,6 +19,7 @@ if (updateId > -1) {
 
 function findCountryIndex(req){
   const stateItem = countrysArray.find(state => state.id == req.params.id);
+  
   const startState = countrysArray.indexOf(stateItem);
   return startState;
 }
