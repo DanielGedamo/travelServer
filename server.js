@@ -1,12 +1,13 @@
-const dotenv = require("dotenv");
+const dotenv = require("dotenv")
 dotenv.config();
 
 const express = require("express");
-const travelrouter = require("./routes/travelRouter");
 const app = express();
 const port = 8090;
-const validat = require("./validation/userValiditon")
-const usersArray = require("./model/usersArray");
+require("./DB/index")
+
+const booksRouter = require("./routes/booksRouter")
+const booksMODEL = require("./model/books-model")
 // dotenv.config()
 app.use(express.json({ exstended: true }));
 app.use(express.urlencoded({ exstended: true }));
@@ -29,8 +30,10 @@ app.use(express.urlencoded({ exstended: true }));
 // }
 // app.use()
 // app.use(moddleware)
-// app.use(urlMeddlewr)
-app.use("/states",travelrouter)
+// app.use(urlMeddlewr)'
+app.use("/", (req, res) => {res.send("success")})
+app.use("/books",booksRouter)
+// app.use("/states",travelrouter)
 // const moddleware = (req, res, next) => {
 //   const userItem = usersArray.find (itememail => itememail.email == req.body.email
 //   );
@@ -45,11 +48,11 @@ app.use("/states",travelrouter)
 
 // app.use("/states",moddleware,travelrouter);
 
-app.get("/", (req, res) => {
-  res.send({ massage: "success" });
-});
+// app.get("/", (req, res) => {
+//   res.send({ massage: "success" });
+// });
 
 app.listen(port, () => {
-  console.log(process.env.CONNECTION_STRING);
+  // console.log(process.env.CONNECTION_STRING);
   console.log(`server listen on port :${port}`);
 });

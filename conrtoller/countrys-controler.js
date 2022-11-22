@@ -16,22 +16,26 @@ const addcountry = (req, res) => {
 //   }
 //   res.send({ massge: "not found" });
 // };
- const updatecountry = (req, res) => {
+const updatecountry = (req, res) => {
   const countyItem = countrysArray.find((counrty) => counrty.id == req.body.id);
-  const startIndex = countrysArray.indexOf(countyItem)
+  const startIndex = countrysArray.indexOf(countyItem);
   if (startIndex > -1) {
     countrysArray[startIndex] == req.body.newData;
     res.send("uodate success");
   }
-  res.send("error")
+  res.send("error");
 };
-const deliteCountry = (req,res)=>{
-  const countryToDelite = countrysArray.find(contry => contry.id == req.params.id);
+const deliteCountry = (req, res) => {
+  const countryToDelite = countrysArray.find(
+    (contry) => contry.id == req.params.id
+  );
   const startIndex = countrysArray.indexOf(countryToDelite);
-  if(startIndex > -1){
-    countrysArray.splice(startIndex,1)?res.send({mesagge:"success",data:countrysArray}):res.send("error")
+  if (startIndex > -1) {
+    countrysArray.splice(startIndex, 1)
+      ? res.send({ mesagge: "success", data: countrysArray })
+      : res.send("error");
   }
-}
+};
 
 function findCountryIndex(req) {
   const stateItem = countrysArray.find((state) => state.id == req.params.id);
@@ -39,10 +43,50 @@ function findCountryIndex(req) {
   const startState = countrysArray.indexOf(stateItem);
   return startState;
 }
+const getBooks = async (req,res ) =>{
+  await booksMoodel.find({})
+  .then((books,err) =>{
+    if(err){
+      return res.status(400).json({success:false,err})
+    }
+    if(books.length == 0 ){
+      return res.json({success: false,massege:"no books"})
+    }
+    return res.status(200).json({success:true , massege:books})
+
+  })
+}
+const getBooksById = async (req,res) => {
+  await booksMoodel.findById(req.params.id)
+ .then(book =>{
+  if(!book){
+    return res.json({massege:"books is not available"})
+  }
+    return res.json({success: false,massege:"book is not available"})
+ })
+  return res.status(200).json({success:true,book})
+  .catch(error => res.status(400).json({ success: false, error }))
+  
+}
 
 module.exports = {
   getcountry,
   addcountry,
   updatecountry,
-  deliteCountry
+  deliteCountry,
 };
+
+//.................   תרגול 
+// const bookModel = require("../model/country-model");
+// const getBooks = async (req, res) => {
+//   await bookModel.find({})
+//.then((err, books) => {
+//     if (err) {
+//       return res.status(400).json({success:false,err});
+//     }
+//     if (books.length == 0) {
+//       return res.json({success:false,masseg:"no books"});
+//     }
+//     res.status(200).json({success:true,books});
+//   });
+// };
